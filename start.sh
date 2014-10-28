@@ -2,19 +2,16 @@
 
 # enable/disable ssl based on env variable set from docker container run command
  if [ $SSL == "yes" ]; then
- 	sed -i -e 's/MADSONIC_PORT=4040/MADSONIC_PORT=0/g' /var/madsonic/madsonic.sh
-	sed -i -e 's/MADSONIC_HTTPS_PORT=0/MADSONIC_HTTPS_PORT=4050/g' /var/madsonic/madsonic.sh
 	echo "Enabling SSL for Madsonic"
+ 	/var/madsonic/madsonic.sh --home=/config --host=0.0.0.0 --https-port=4050
 	
  elif [ $SSL == "no" ]; then
-  	sed -i -e 's/MADSONIC_PORT=0/MADSONIC_PORT=4040/g' /var/madsonic/madsonic.sh
- 	sed -i -e 's/MADSONIC_HTTPS_PORT=4050/MADSONIC_HTTPS_PORT=0/g' /var/madsonic/madsonic.sh
- 	echo "Disabling SSL for Madsonic"
+  	echo "Disabling SSL for Madsonic"
+ 	/var/madsonic/madsonic.sh --home=/config --host=0.0.0.0 --port=4040
  
  else
-   	sed -i -e 's/MADSONIC_PORT=0/MADSONIC_PORT=4040/g' /var/madsonic/madsonic.sh
- 	sed -i -e 's/MADSONIC_HTTPS_PORT=4050/MADSONIC_HTTPS_PORT=0/g' /var/madsonic/madsonic.sh
-  	echo "SSL not defined, defaulting to disabled"
+   	echo "SSL not defined, defaulting to disabled"
+ 	/var/madsonic/madsonic.sh --home=/config --host=0.0.0.0 --port=4040
 	
  fi
  
