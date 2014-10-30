@@ -6,10 +6,10 @@ mkdir -p /config/media/podcast
 mkdir -p /config/playlists/import
 mkdir -p /config/playlists/export
 mkdir -p /config/playlists/backup
-mkdir -p /config/plugins/transcode
+mkdir -p /config/transcode
 
-#copy transcode to config directory
-cp /var/madsonic/transcode/linux/* /config/plugins/transcode/
+#copy transcode to config directory - transcode directory is subdir of path set from --home flag, do not alter
+cp /var/madsonic/transcode/linux/* /config/transcode/
 
 # enable/disable ssl based on env variable set from docker container run command
  if [ $SSL == "yes" ]; then
