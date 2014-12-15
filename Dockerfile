@@ -5,10 +5,10 @@ MAINTAINER binhex
 ##################
 
 # download madsonic
-ADD http://www.madsonic.org/download/5.2/20141111_madsonic-5.2.5300-standalone.zip /var/madsonic/madsonic.zip
+ADD http://www.madsonic.org/download/5.2/20141214_madsonic-5.2.5420-standalone.zip /var/madsonic/madsonic.zip
 
 # download madsonic transcoders
-ADD http://www.madsonic.org/download/transcode/20141111_madsonic-transcode_latest_x64.zip /var/madsonic/transcode/transcode.zip
+ADD http://www.madsonic.org/download/transcode/20141214_madsonic-transcode_latest_x64.zip /var/madsonic/transcode/transcode.zip
 
 # copy start bash script to madsonic dir (checks ssl enabled/disabled and copies transcoders to madsonic install dir)
 ADD start.sh /var/madsonic/start.sh
