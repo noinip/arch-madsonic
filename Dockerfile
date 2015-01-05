@@ -1,4 +1,4 @@
-FROM binhex/arch-base:2014101300
+FROM binhex/arch-base:2015010500
 MAINTAINER binhex
 
 # additional files
@@ -22,7 +22,6 @@ ADD madsonic.conf /etc/supervisor/conf.d/madsonic.conf
 # install install app using pacman, set perms, cleanup
 RUN pacman -Sy --noconfirm && \
 	pacman -S libcups jre7-openjdk-headless fontconfig unzip --noconfirm && \
-	pacman -Scc --noconfirm && \
 	mkdir -p /var/madsonic/media && \
 	mkdir -p /var/madsonic/transcode && \
 	unzip /var/madsonic/madsonic.zip -d /var/madsonic && \
@@ -31,8 +30,9 @@ RUN pacman -Sy --noconfirm && \
 	rm /var/madsonic/transcode/transcode.zip && \
 	chown -R nobody:users /var/madsonic && \
 	chmod -R 775 /var/madsonic && \	
-	rm -rf /archlinux/usr/share/locale && \
-	rm -rf /archlinux/usr/share/man && \
+	yes|pacman -Scc && \	
+	rm -rf /usr/share/locale/* && \
+	rm -rf /usr/share/man/* && \
 	rm -rf /root/* && \
 	rm -rf /tmp/*
 
