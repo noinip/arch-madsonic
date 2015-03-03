@@ -1,17 +1,20 @@
-FROM binhex/arch-base:2015010500
+FROM binhex/arch-base:2015030300
 MAINTAINER binhex
 
 # additional files
 ##################
 
 # download madsonic
-ADD http://www.madsonic.org/download/5.2/20141214_madsonic-5.2.5420-standalone.zip /var/madsonic/madsonic.zip
+ADD http://www.madsonic.org/download/5.2/20141214_madsonic-5.2.5420-standalone.zip /home/nobody/madsonic.zip
 
-# download madsonic transcoders
-ADD http://www.madsonic.org/download/transcode/20141214_madsonic-transcode_latest_x64.zip /var/madsonic/transcode/transcode.zip
+# download madsonic transcode pack
+ADD http://www.madsonic.org/download/transcode/20141214_madsonic-transcode_latest_x64.zip /home/nobody/transcode/transcode.zip
+
+# add install bash script
+ADD install.sh /root/install.sh
 
 # copy start bash script to madsonic dir (checks ssl enabled/disabled and copies transcoders to madsonic install dir)
-ADD start.sh /var/madsonic/start.sh
+ADD start.sh /home/nobody/start.sh
 
 # add supervisor conf file for app
 ADD madsonic.conf /etc/supervisor/conf.d/madsonic.conf
@@ -19,25 +22,9 @@ ADD madsonic.conf /etc/supervisor/conf.d/madsonic.conf
 # install app
 #############
 
-# install install app using pacman, set perms, cleanup
-RUN pacman -Sy --noconfirm && \
-	pacman -S libcups jre7-openjdk-headless fontconfig unzip --noconfirm && \
-	mkdir -p /var/madsonic/media && \
-	mkdir -p /var/madsonic/transcode && \
-	unzip /var/madsonic/madsonic.zip -d /var/madsonic && \
-	rm /var/madsonic/madsonic.zip && \
-	unzip /var/madsonic/transcode/transcode.zip -d /var/madsonic/transcode && \
-	rm /var/madsonic/transcode/transcode.zip && \
-	chown -R nobody:users /var/madsonic && \
-	chmod -R 775 /var/madsonic && \	
-	yes|pacman -Scc && \	
-	rm -rf /usr/share/locale/* && \
-	rm -rf /usr/share/man/* && \
-	rm -rf /root/* && \
-	rm -rf /tmp/*
-
-# force process to run as foreground task
-RUN sed -i 's/-jar madsonic-booter.jar > \${LOG} 2>\&1 \&/-jar madsonic-booter.jar > \${LOG} 2>\&1/g' /var/madsonic/madsonic.sh
+# make executable and run bash scripts to install app
+RUN chmod +x /root/install.sh /home/nobody/start.sh && \
+	/bin/bash /root/install.sh
 
 # docker settings
 #################
