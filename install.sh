@@ -8,23 +8,23 @@ pacman -Sy --noconfirm
 pacman -S --needed $pacman_packages --noconfirm
 
 # create destination directories
-mkdir -p /home/nobody/media
-mkdir -p /home/nobody/transcode
+mkdir -p /opt/madsonic/media
+mkdir -p /opt/madsonic/transcode
 
 # unzip madsonic and transcode
-unzip /home/nobody/madsonic.zip -d /home/nobody
-unzip /home/nobody/transcode/transcode.zip -d /home/nobody/transcode
+unzip /opt/madsonic/madsonic.zip -d /opt/madsonic
+unzip /opt/madsonic/transcode/transcode.zip -d /opt/madsonic/transcode
 
 # remove source zip files
-rm /home/nobody/madsonic.zip
-rm /home/nobody/transcode/transcode.zip
+rm /opt/madsonic/madsonic.zip
+rm /opt/madsonic/transcode/transcode.zip
 
 # force process to run as foreground task
-sed -i 's/-jar madsonic-booter.jar > \${LOG} 2>\&1 \&/-jar madsonic-booter.jar > \${LOG} 2>\&1/g' /home/nobody/madsonic.sh
+sed -i 's/-jar madsonic-booter.jar > \${LOG} 2>\&1 \&/-jar madsonic-booter.jar > \${LOG} 2>\&1/g' /opt/madsonic/madsonic.sh
 
 # set permissions
-chown -R nobody:users /home/nobody
-chmod -R 775 /home/nobody
+chown -R nobody:users /opt/madsonic
+chmod -R 775 /opt/madsonic
 
 # cleanup
 yes|pacman -Scc

@@ -5,16 +5,16 @@ MAINTAINER binhex
 ##################
 
 # download madsonic
-ADD http://www.madsonic.org/download/5.2/20141214_madsonic-5.2.5420-standalone.zip /home/nobody/madsonic.zip
+ADD http://www.madsonic.org/download/5.2/20141214_madsonic-5.2.5420-standalone.zip /opt/madsonic/madsonic.zip
 
 # download madsonic transcode pack
-ADD http://www.madsonic.org/download/transcode/20141214_madsonic-transcode_latest_x64.zip /home/nobody/transcode/transcode.zip
+ADD http://www.madsonic.org/download/transcode/20141214_madsonic-transcode_latest_x64.zip /opt/madsonic/transcode/transcode.zip
 
 # add install bash script
 ADD install.sh /root/install.sh
 
 # copy start bash script to madsonic dir (checks ssl enabled/disabled and copies transcoders to madsonic install dir)
-ADD start.sh /home/nobody/start.sh
+ADD start.sh /opt/madsonic/start.sh
 
 # add supervisor conf file for app
 ADD madsonic.conf /etc/supervisor/conf.d/madsonic.conf
@@ -23,7 +23,7 @@ ADD madsonic.conf /etc/supervisor/conf.d/madsonic.conf
 #############
 
 # make executable and run bash scripts to install app
-RUN chmod +x /root/install.sh /home/nobody/start.sh && \
+RUN chmod +x /root/install.sh /opt/madsonic/start.sh && \
 	/bin/bash /root/install.sh
 
 # docker settings
