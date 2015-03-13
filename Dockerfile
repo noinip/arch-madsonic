@@ -4,6 +4,9 @@ MAINTAINER binhex
 # additional files
 ##################
 
+# add supervisor conf file for app
+ADD *.conf /etc/supervisor/conf.d/
+
 # download madsonic
 ADD http://www.madsonic.org/download/5.2/20141214_madsonic-5.2.5420-standalone.zip /opt/madsonic/madsonic.zip
 
@@ -16,14 +19,11 @@ ADD install.sh /root/install.sh
 # copy start bash script to madsonic dir (checks ssl enabled/disabled and copies transcoders to madsonic install dir)
 ADD start.sh /opt/madsonic/start.sh
 
-# add supervisor conf file for app
-ADD madsonic.conf /etc/supervisor/conf.d/madsonic.conf
-
 # install app
 #############
 
 # make executable and run bash scripts to install app
-RUN chmod +x /root/install.sh /opt/madsonic/start.sh && \
+RUN chmod +x /root/*.sh /opt/madsonic/*.sh && \
 	/bin/bash /root/install.sh
 
 # docker settings
