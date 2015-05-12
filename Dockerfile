@@ -7,13 +7,7 @@ MAINTAINER binhex
 # add supervisor conf file for app
 ADD *.conf /etc/supervisor/conf.d/
 
-# download madsonic
-ADD http://www.madsonic.org/download/5.2/20141214_madsonic-5.2.5420-standalone.zip /opt/madsonic/madsonic.zip
-
-# download madsonic transcode pack
-ADD http://www.madsonic.org/download/transcode/20141214_madsonic-transcode_latest_x64.zip /opt/madsonic/transcode/transcode.zip
-
-# add install bash script
+# add bash scripts to install app
 ADD install.sh /root/install.sh
 
 # copy start bash script to madsonic dir (checks ssl enabled/disabled and copies transcoders to madsonic install dir)

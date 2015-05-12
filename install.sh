@@ -11,6 +11,12 @@ pacman -S --needed $pacman_packages --noconfirm
 mkdir -p /opt/madsonic/media
 mkdir -p /opt/madsonic/transcode
 
+# download madsonic standalone
+curl -o /opt/madsonic/madsonic.zip -L http://www.madsonic.org/download/5.1/20141017_madsonic-5.1.5200-standalone.zip
+
+# download madsonic transcode
+curl -o /opt/madsonic/transcode/transcode.zip -L http://www.madsonic.org/download/transcode/20141017_madsonic-transcode_latest_x64.zip
+
 # unzip madsonic and transcode
 unzip /opt/madsonic/madsonic.zip -d /opt/madsonic
 unzip /opt/madsonic/transcode/transcode.zip -d /opt/madsonic/transcode
