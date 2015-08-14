@@ -15,7 +15,7 @@ mkdir -p /opt/madsonic/media
 mkdir -p /opt/madsonic/transcode
 
 # download madsonic standalone
-curl -o /opt/madsonic/madsonic.zip -L http://www.madsonic.org/download/5.1/20141017_madsonic-5.1.5200-standalone.zip
+curl -o /opt/madsonic/madsonic.zip -L http://www.madsonic.org/download/5.1/20150506_madsonic-5.1.5240-standalone.zip
 
 # download madsonic transcode
 curl -o /opt/madsonic/transcode/transcode.zip -L http://www.madsonic.org/download/transcode/20141017_madsonic-transcode_latest_x64.zip
