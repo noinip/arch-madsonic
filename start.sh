@@ -13,15 +13,17 @@ cp /opt/madsonic/transcode/linux/* /config/transcode/
 
 # enable/disable ssl based on env variable set from docker container run command
  if [[ $SSL == "yes" ]]; then
-        echo "Enabling SSL for Madsonic"
-        /opt/madsonic/madsonic.sh --home=/config --host=0.0.0.0 --https-port=4050 --default-music-folder=/media --default-podcast-folder=/config/media/podcast --default-playlist-import-folder=/config/playlists/import --default-playlist-export-folder=/config/playlists/export --default-playlist-backup-folder=/config/playlists/backup
-
- elif [[ $SSL == "no" ]]; then
-        echo "Disabling SSL for Madsonic"
-        /opt/madsonic/madsonic.sh --home=/config --host=0.0.0.0 --port=4040 --default-music-folder=/media --default-podcast-folder=/config/media/podcast --default-playlist-import-folder=/config/playlists/import --default-playlist-export-folder=/config/playlists/export --default-playlist-backup-folder=/config/playlists/backup
-
- else
-        echo "SSL not defined, defaulting to disabled"
-        /opt/madsonic/madsonic.sh --home=/config --host=0.0.0.0 --port=4040 --default-music-folder=/media --default-podcast-folder=/config/media/podcast --default-playlist-import-folder=/config/playlists/import --default-playlist-export-folder=/config/playlists/export --default-playlist-backup-folder=/config/playlists/backup
-
+	echo "Enabling SSL for Madsonic"
+	port="--https-port=4050"
+elif [[ $SSL == "no" ]]; then
+	echo "Disabling SSL for Madsonic"
+	port="--port=4040"
  fi
+
+ # if context path not defined then set to empty string (default root context)
+ if [[ -z "${CONTEXT_PATH}" ]]; then
+	CONTEXT_PATH="/"
+ fi
+
+# run madsonic with flags to set config
+/opt/madsonic/madsonic.sh --home=/config --host=0.0.0.0 ${port} --context-path=${CONTEXT_PATH} --default-music-folder=/media --default-podcast-folder=/config/media/podcast --default-playlist-import-folder=/config/playlists/import --default-playlist-export-folder=/config/playlists/export --default-playlist-backup-folder=/config/playlists/backup
