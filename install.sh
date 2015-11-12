@@ -7,7 +7,7 @@ set -e
 pacman_packages="libcups jre7-openjdk-headless fontconfig unzip"
 
 # install pre-reqs
-pacman -Sy --noconfirm
+pacman -Syu --ignore filesystem --noconfirm
 pacman -S --needed $pacman_packages --noconfirm
 
 # create destination directories
