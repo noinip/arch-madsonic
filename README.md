@@ -24,7 +24,7 @@ Note:- If you wish to use a secure connection (HTTPS) then please set the enviro
 **Access application**
 
 ```
-http://<host ip>:4040
+`http://<host ip>:4040`
 ```
 
 or if you have enabled SSL
