@@ -1,34 +1,51 @@
-Madsonic
-=========
+**Application**
 
-Madsonic - http://www.madsonic.org/
+[Madsonic](http://beta.madsonic.org/pages/index.jsp)
 
-Latest Public Release of Madsonic.
+**Application description**
 
-**Pull image**
+Madsonic is a fork of the Subsonic 4.x Server, Madsonic is a full replacement for your current Subsonic server!, Madsonic is designed for people who want more from the vanilla Subsonic features.
 
+**Build notes**
+
+Latest stable release of Madsonic.
+
+**Usage**
 ```
-docker pull binhex/arch-madsonic
-```
-
-**Run container**
-
-```
-docker run -d -p 4040:4040 -p 4050:4050 --name=<container name> -e CONTEXT_PATH="/" -e SSL="yes" -v <path for media files>:/media -v <path for config files>:/config -v /etc/localtime:/etc/localtime:ro binhex/arch-madsonic
+docker run -d \
+	-p 4040:4040 \
+	-p 4050:4050 \
+	--name=<container name> \
+	-e CONTEXT_PATH=<root path> \
+	-e SSL=<yes|no> \
+	-v <path for media files>:/media \
+	-v <path for config files>:/config \
+	-v /etc/localtime:/etc/localtime:ro \
+	binhex/arch-madsonic
 ```
 
 Please replace all user variables in the above command defined by <> with the correct values.
 
-Note:- If you wish to use a secure connection (HTTPS) then please set the environment variable (SSL="yes") to "yes", otherwise set to "no" to use HTTP only.
-
 **Access application**
 
-```
 `http://<host ip>:4040`
+
+**Example**
+```
+docker run -d \
+	-p 4040:4040 \
+	-p 4050:4050 \
+	--name=madsonic \
+	-e CONTEXT_PATH=\ \
+	-e SSL=yes \
+	-v /media/music/:/media \
+	-v /apps/docker/madsonic:/config \
+	-v /etc/localtime:/etc/localtime:ro \
+	binhex/arch-madsonic
 ```
 
-or if you have enabled SSL
+**Notes**
 
-```
-https://<host ip>:4050
-```
+N/A
+
+[Support forum](http://lime-technology.com/forum/index.php?topic=38055.0)
