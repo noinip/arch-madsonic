@@ -5,13 +5,13 @@ MAINTAINER binhex
 ##################
 
 # add supervisor conf file for app
-ADD *.conf /etc/supervisor/conf.d/
+ADD setup/*.conf /etc/supervisor/conf.d/
 
 # add bash scripts to install app
-ADD install.sh /root/install.sh
+ADD setup/install.sh /root/install.sh
 
 # copy start bash script to madsonic dir (checks ssl enabled/disabled and copies transcoders to madsonic install dir)
-ADD start.sh /opt/madsonic/start.sh
+ADD setup/start.sh /opt/madsonic/start.sh
 
 # install app
 #############
@@ -38,8 +38,8 @@ EXPOSE 4040
 # expose port for https
 EXPOSE 4050
 
-# run supervisor
-################
+# set permissions
+#################
 
-# run supervisor
-CMD ["supervisord", "-c", "/etc/supervisor.conf", "-n"]
+# run script to set uid, gid and permissions
+CMD ["/bin/bash", "/root/init.sh"]

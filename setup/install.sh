@@ -31,10 +31,6 @@ rm /opt/madsonic/transcode/transcode.zip
 # force process to run as foreground task
 sed -i 's/-jar madsonic-booter.jar > \${LOG} 2>\&1 \&/-jar madsonic-booter.jar > \${LOG} 2>\&1/g' /opt/madsonic/madsonic.sh
 
-# set permissions
-chown -R nobody:users /opt/madsonic
-chmod -R 775 /opt/madsonic
-
 # cleanup
 yes|pacman -Scc
 rm -rf /usr/share/locale/*
