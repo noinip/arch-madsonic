@@ -38,8 +38,8 @@ else
 fi
 
 # set permissions inside container
-chown -R "${UID}":"${GID}" /opt/madsonic
-chmod -R 775 /opt/madsonic
+chown -R "${UID}":"${GID}" /opt/madsonic /home/nobody
+chmod -R 775 /opt/madsonic /home/nobody
 
 echo "[info] Starting Supervisor..."
 
