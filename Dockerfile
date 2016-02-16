@@ -10,6 +10,9 @@ ADD setup/*.conf /etc/supervisor/conf.d/
 # add bash scripts to install app
 ADD setup/install.sh /root/install.sh
 
+# add bash scripts to set uid and gid and then set permissions
+ADD setup/init.sh /root/init.sh
+
 # copy start bash script to madsonic dir (checks ssl enabled/disabled and copies transcoders to madsonic install dir)
 ADD setup/start.sh /opt/madsonic/start.sh
 
