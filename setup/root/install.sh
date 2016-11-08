@@ -3,32 +3,79 @@
 # exit script if return code != 0
 set -e
 
+# build scripts
+####
+
+# download build scripts from github
+curl -o /tmp/scripts-master.zip -L https://github.com/binhex/scripts/archive/master.zip
+
+# unzip build scripts
+unzip /tmp/scripts-master.zip -d /tmp
+
+# move shell scripts to /root
+find /tmp/scripts-master/ -type f -name '*.sh' -exec mv -i {} /root/  \;
+
+# pacman packages
+####
+
 # define pacman packages
-pacman_packages="libcups jre7-openjdk-headless fontconfig unzip"
+pacman_packages="libcups jre7-openjdk-headless fontconfig"
 
-# install pre-reqs
-pacman -S --needed $pacman_packages --noconfirm
+# install compiled packages using pacman
+if [[ ! -z "${pacman_packages}" ]]; then
+	pacman -S --needed $pacman_packages --noconfirm
+fi
 
-# create destination directories
-mkdir -p /opt/madsonic/media
-mkdir -p /opt/madsonic/transcode
+# aor packages
+####
 
-# download madsonic standalone
-curl -o /opt/madsonic/madsonic.zip -L http://www.madsonic.org/download/6.1/20160915_madsonic-6.1.8700-standalone.zip
+# define arch official repo (aor) packages
+aor_packages=""
 
-# download madsonic transcode
-curl -o /opt/madsonic/transcode/transcode.zip -L http://www.madsonic.org/download/transcode/20160915_madsonic-transcode-linux-x64.zip
+# call aor script (arch official repo)
+source /root/aor.sh
 
-# unzip madsonic and transcode
-unzip /opt/madsonic/madsonic.zip -d /opt/madsonic
-unzip /opt/madsonic/transcode/transcode.zip -d /opt/madsonic/transcode
+# aur packages
+####
 
-# remove source zip files
-rm /opt/madsonic/madsonic.zip
-rm /opt/madsonic/transcode/transcode.zip
+# define aur helper
+aur_helper="apacman"
+
+# define aur packages
+aur_packages=""
+
+# call aur install script (arch user repo)
+source /root/aur.sh
+
+# call custom install script
+source /root/custom.sh
+
+# config
+####
 
 # force process to run as foreground task
 sed -i 's/-jar madsonic-booter.jar > \${LOG} 2>\&1 \&/-jar madsonic-booter.jar > \${LOG} 2>\&1/g' /opt/madsonic/madsonic.sh
+
+# container perms
+####
+
+# create file with contets of here doc
+cat <<'EOF' > /tmp/permissions_heredoc
+# set permissions inside container
+chown -R "${PUID}":"${PGID}" /opt/madsonic /home/nobody
+chmod -R 775 /opt/madsonic /home/nobody
+
+EOF
+
+# replace permissions placeholder string with contents of file (here doc)
+sed -i '/# PERMISSIONS_PLACEHOLDER/{
+    s/# PERMISSIONS_PLACEHOLDER//g
+    r /tmp/permissions_heredoc
+}' /root/init.sh
+rm /tmp/permissions_heredoc
+
+# env vars
+####
 
 # cleanup
 yes|pacman -Scc
