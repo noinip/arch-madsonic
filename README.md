@@ -21,6 +21,7 @@ docker run -d \
     -v <path for media files>:/media \
     -v <path for config files>:/config \
     -v /etc/localtime:/etc/localtime:ro \
+    -e UMASK=<umask for created files> \
     -e PUID=<uid for user> \
     -e PGID=<gid for user> \
     binhex/arch-madsonic
@@ -43,6 +44,7 @@ docker run -d \
     -v /media/music/:/media \
     -v /apps/docker/madsonic:/config \
     -v /etc/localtime:/etc/localtime:ro \
+    -e UMASK=000 \
     -e PUID=0 \
     -e PGID=0 \
     binhex/arch-madsonic
