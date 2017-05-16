@@ -5,13 +5,13 @@ MAINTAINER binhex
 ##################
 
 # add supervisor conf file for app
-ADD setup/*.conf /etc/supervisor/conf.d/
+ADD build/*.conf /etc/supervisor/conf.d/
 
-# add bash scripts to install app
-ADD setup/root/*.sh /root/
+# add build bash script
+ADD build/root/*.sh /root/
 
-# copy start bash script to madsonic dir (checks ssl enabled/disabled and copies transcoders to madsonic install dir)
-ADD setup/nobody/*.sh /home/nobody/
+# add run bash script
+ADD run/nobody/*.sh /home/nobody/
 
 # install app
 #############
