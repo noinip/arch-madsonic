@@ -8,10 +8,10 @@ mkdir -p /opt/madsonic/media
 mkdir -p /opt/madsonic/transcode
 
 # download madsonic standalone
-curl --connect-timeout 5 --max-time 10 --retry 5 --retry-delay 0 --retry-max-time 60 -o /opt/madsonic/madsonic.zip -L http://www.madsonic.org/download/6.1/20160915_madsonic-6.1.8700-standalone.zip
+curly.sh -rc 6 -rw 10 -of /opt/madsonic/madsonic.zip -url "http://www.madsonic.org/download/6.1/20160915_madsonic-6.1.8700-standalone.zip"
 
 # download madsonic transcode
-curl --connect-timeout 5 --max-time 10 --retry 5 --retry-delay 0 --retry-max-time 60 -o /opt/madsonic/transcode/transcode.zip -L http://www.madsonic.org/download/transcode/20160915_madsonic-transcode-linux-x64.zip
+curly.sh -rc 6 -rw 10 -of /opt/madsonic/transcode/transcode.zip -url "http://www.madsonic.org/download/transcode/20160915_madsonic-transcode-linux-x64.zip"
 
 # unzip madsonic and transcode
 unzip /opt/madsonic/madsonic.zip -d /opt/madsonic
